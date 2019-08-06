@@ -2,26 +2,29 @@
 
 [FOSS4G 2019 Workshop Bucharest (Romania)](https://2019.foss4g.org/)
 
-![](img/foss4g-2019.png ) ![](img/postgresql_postgis.png)
+![FOSS4G 2019 Bucharest](img/foss4g-2019.png ) ![](img/postgresql_postgis.png)
+
+
+[![Creative Commons License](http://i.creativecommons.org/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/deed.de)
 
 
 ## Astrid Emde
 
 * WhereGroup GmbH Germany
 * astrid.emde@wheregroup.com
-* ![](img/twitter.png) [@astroidex](https://twitter.com/astroidex)
+* [![@astroidex on twitter](img/twitter.png)](https://twitter.com/astroidex) [@astroidex](https://twitter.com/astroidex)
 
-![](img/WhereGroup.png )
+![WhereGroup](img/WhereGroup.png )
 
 * FOSS Academy https://www.foss-academy.com/
 
-![](img/FOSSAcademy.png)
+![FOSS Academy](img/FOSSAcademy.png)
 
 ## Lars Lingner
 
 * with friendly support of GIS Consultant Lars Lingner Mappwebbing Germany
 * lars@lingner.eu
-* ![](img/twitter.png) [@mapwebbing](https://twitter.com/mapwebbing)
+* [![@mapwebbing on twitter](img/twitter.png)](https://twitter.com/mapwebbing) [@astroidex](https://twitter.com/mapwebbing)
 
 
 ## What we learn 
