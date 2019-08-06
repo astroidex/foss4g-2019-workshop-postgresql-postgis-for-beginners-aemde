@@ -7,16 +7,21 @@
 
 ## Astrid Emde
 
-* Astrid Emde
-* WhereGroup GmbH
+* WhereGroup GmbH Germany
 * astrid.emde@wheregroup.com
-* [@astroidex](https://twitter.com/astroidex)
+* ![](img/twitter.png) [@astroidex](https://twitter.com/astroidex)
 
 ![](img/WhereGroup.png )
 
 * FOSS Academy https://www.foss-academy.com/
 
 ![](img/FOSSAcademy.png)
+
+## Lars Lingner
+
+* with friendly support of GIS Consultant Lars Lingner Mappwebbing Germany
+* lars@lingner.eu
+* ![](img/twitter.png) [@mapwebbing](https://twitter.com/mapwebbing)
 
 
 ## What we learn 
@@ -118,7 +123,7 @@ SELECT version(), postgis_version(), postgis_full_version();
 * Very powerful: vector & raster data, geometry (planar) and geography (spheroid), circular objects, 3D, 4D, point cloud, pg_routing for routing, topology
 * Stores data as WKB (Well-known Binary) and displays it as WKT (Well-known text)
 * http://www.postgis.org/
-* http://postgis.net/docs/manual-2.5/
+* http://postgis.net/docs/
 
 
 ## Database Clients
@@ -296,11 +301,11 @@ INSERT INTO cities(
 
 ### Excercise 5: QGIS: Load data from **_natural_earth2_** and from your new database
 
-#. Open QGIS. Choose :menuselection:`Geospatial --> Desktop QGIS --> QGIS Desktop` .
-#. Load countries from the database natural_earth2
-#. Create a new PostGIS connection to your new database foss4g
-#. Load your new table cities
-#. Add a new point to your cities table and mark the place where you come from (approximately)
+1. Open QGIS. Choose :menuselection:`Geospatial --> Desktop QGIS --> QGIS Desktop` .
+1. Load countries from the database natural_earth2
+1. Create a new PostGIS connection to your new database foss4g
+1. Load your new table cities
+1. Add a new point to your cities table and mark the place where you come from (approximately)
 
 ![](img/qgis_cities.png)
 
@@ -313,14 +318,13 @@ Best way is to add the data you would like to import to a QGIS project. You can 
 
 To import data you have to follow the steps:
 
-#. Open the DB Manager
-#. Connect to your database
-#. Use the Import layer/file button
-#. Choose your data for import
-#. define a name for your table, define the SRID, add a primary key (gid recommended)
-#. Create a spatial index
-#. Start the import
-#. Add the imported data via drag & drop to your QGIS project
+1. Open the DB Manager
+1. Connect to your database
+1. Use the Import layer/file button1. Choose your data for import
+1. define a name for your table, the SRID, add a primary key (gid recommended)
+1. Create a spatial index
+1. Start the import
+1. Add the imported data via drag & drop to your QGIS project
 
 ![](img/qgis_db_manager_import.png)
 
@@ -335,8 +339,8 @@ To import data you have to follow the steps:
 
 ## Get to know PostGIS functions 
 
-* PostGIS Documentation http://postgis.net/docs/manual-2.5/
-* PostGIS Vector Functions see Chapter 8: http://postgis.net/docs/manual-2.5/reference.html
+* PostGIS Documentation http://postgis.net/docs/
+* PostGIS Vector Functions see Chapter 8: http://postgis.net/docs/reference.html
 
 ### ST_AsEWKT or ST_AsText - to display the geometry as text
 
@@ -349,12 +353,12 @@ SELECT ST_AsEWKT(geom) FROM provinces_romania;
 ### Geometry Constructors
 
 * there are many functions to create geometries see Geometry Constructors
-* http://postgis.net/docs/manual-2.5/reference.html#Geometry_Constructors
-* we used ST_MakePoint already - 2D, 3DZ or 4D is possible http://postgis.net/docs/manual-2.5/ST_MakePoint.html
+* http://postgis.net/docs/reference.html#Geometry_Constructors
+* we used ST_MakePoint already - 2D, 3DZ or 4D is possible http://postgis.net/docs/ST_MakePoint.html
 
 ST_GeomFromText - can be used for different geometry types
-* http://postgis.net/docs/manual-2.5/ST_GeomFromText.html
-* http://postgis.net/docs/manual-2.5/using_postgis_dbmanagement.html#OpenGISWKBWKT
+* http://postgis.net/docs/ST_GeomFromText.html
+* http://postgis.net/docs/using_postgis_dbmanagement.html#OpenGISWKBWKT
 
 ```sql
 Update cities set geom = ST_GeomFromText('POINT(6.958307 50.941357)',4326) where name = 'Cologne';
@@ -371,7 +375,7 @@ Update ne_10m_admin_0_countries set geom = ST_GeomFromText('MULTIPOLYGON(((0 0,4
 
 ### Excercise 7: Calculate the area for each country
 
-* http://postgis.net/docs/manual-2.5/ST_Area.html
+* http://postgis.net/docs/ST_Area.html
 * Note that the area is calculated using the srid of the geometry. Use the calculation on the spheroid to get the r result in meters.
 
 Calculate area without using the spheroid (units of the projection will be used)
@@ -453,12 +457,12 @@ CREATE INDEX gist_cities_geom
 ## Geometry Processing
 
 * There are many functions for geometry processing f.e. buffering, intersection, union, subdivide
-* http://postgis.net/docs/manual-2.5/reference.html#Geometry_Processing
+* http://postgis.net/docs/reference.html#Geometry_Processing
 
 ### Exercise 10: Buffer populated places with 10 km
 
 * Buffer the table ne_10m_populated_places with 10 km
-* http://postgis.net/docs/manual-2.5/ST_Buffer.html
+* http://postgis.net/docs/ST_Buffer.html
 * Note that you have to use geography to create a buffer in meter - use typecast ::geography
 
 ```sql
@@ -507,7 +511,7 @@ SELECT a.*
 ### Exercise 11: ST_Union - union all provinces from country Romania to one area 
 
 * create a view called qry_tanzania_union
-* use ST_UNION http://postgis.net/docs/manual-2.5/ST_Union.html
+* use ST_UNION http://postgis.net/docs/ST_Union.html
 * use table ne_10m_admin_1_states_provinces_shp and filter by admin Tanzania
 * add column admin to your view (admin='United Republic of Tanzania') - you have to use GROUP BY 
 * typecast the geomety column 
@@ -544,7 +548,7 @@ SELECT 1 as gid,
 * Divides a Multi-/Polygon in multiple smaller Polygons
 * define max_vertices (default is 256, can't be < 8)
 * Objekt should not have more than max_vertices
-* http://postgis.net/docs/manual-2.5/ST_Subdivide.html
+* http://postgis.net/docs/ST_Subdivide.html
 * from PostGIS 2.3.0
 
 ```sql
