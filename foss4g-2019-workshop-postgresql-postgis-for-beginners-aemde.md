@@ -24,7 +24,7 @@
 
 * with friendly support of GIS Consultant Lars Lingner Mappwebbing Germany
 * lars@lingner.eu
-* [![@mapwebbing on twitter](img/twitter.png)](https://twitter.com/mapwebbing) [@astroidex](https://twitter.com/mapwebbing)
+* [![@mapwebbing on twitter](img/twitter.png)](https://twitter.com/mapwebbing) [@mapwebbing](https://twitter.com/mapwebbing)
 
 
 ## What we learn 
