@@ -56,7 +56,7 @@ You can download OSGeoLive with the following link. You can install OSGeoLive, r
 ## actual Software Versions
 
 * PostgreSQL 11.x (2019-05-10) https://www.postgresql.org/
-* PostGIS 2.5.x (2017-10-1) http://www.postgis.org/
+* PostGIS 2.5.x (2017-10-1) http://www.postgis.net/
 
 
 ### OSGeoLive 13.0
@@ -121,17 +121,17 @@ SELECT version(), postgis_version(), postgis_full_version();
 * Follows standard - OGC Simple Feature Spezification for SQL and OGC ISO SQL/MM Spezification 
 * Provides many spatial functions 
 * Widley supported by other programs
-* Easy import / export of spatial data (QGIS, shp2pgsql, pgsql2shp, ogr2ogr, dxf2postgis, osm2pgsql)
+* Easy import / export of spatial data (QGIS, shp2pgsql, pgsql2shp, ogr2ogr, dxf2postgis, osm2pgsql, imposm)
 * Can use the advantages from PostgreSQL (user management, replication, indexing & more)
 * Very powerful: vector & raster data, geometry (planar) and geography (spheroid), circular objects, 3D, 4D, point cloud, pg_routing for routing, topology
 * Stores data as WKB (Well-known Binary) and displays it as WKT (Well-known text)
-* http://www.postgis.org/
+* http://www.postgis.net/
 * http://postgis.net/docs/
 
 
 ## Database Clients
 
-* pgAdmin III and new pgAdmin 4 https://www.pgadmin.org/
+* pgAdmin III (for PostgreSQL < 11) and new pgAdmin 4 https://www.pgadmin.org/
 * psql command line client https://www.postgresql.org/docs/current/static/app-psql.html
 * QGIS DB Manager integrated in QGIS
 * DBeaver https://dbeaver.io/
@@ -265,7 +265,7 @@ CREATE EXTENSION postgis;
 ### Excercise 4: Create your own table cities
 
 * create a new table **_cities_** with gid, name, country and geom (see poi example above)
-* create a point for Bucharest (Romania) with ST_MakePoint - find the coordinate at https://www.latlong.net/place/dar-es-salaam-tanzania-1762.html
+* create a point for Bucharest (Romania) with ST_MakePoint - find the coordinate at https://www.latlong.net/place/bucharest-romania-2068.html
 
 ```sql
 CREATE TABLE cities(
@@ -513,10 +513,10 @@ SELECT a.*
 
 ### Exercise 11: ST_Union - union all provinces from country Romania to one area 
 
-* create a view called qry_tanzania_union
+* create a view called qry_romania_union
 * use ST_UNION http://postgis.net/docs/ST_Union.html
-* use table ne_10m_admin_1_states_provinces_shp and filter by admin Tanzania
-* add column admin to your view (admin='United Republic of Tanzania') - you have to use GROUP BY 
+* use table ne_10m_admin_1_states_provinces_shp and filter by admin Romania
+* add column admin to your view (admin='Romania') - you have to use GROUP BY 
 * typecast the geomety column 
 * have a look at your result with QGIS
 
