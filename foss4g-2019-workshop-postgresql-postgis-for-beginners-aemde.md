@@ -175,6 +175,8 @@ SELECT * FROM spatial_ref_sys WHERE srid=4326;
 CREATE DATABASE demo;
 ```
 
+* Connect to database demo by refreshing the list of databases and selecting "demo"
+
 ```sql
 CREATE TABLE pois(
  gid serial PRIMARY KEY,
@@ -190,7 +192,6 @@ Modify your table
 ALTER TABLE pois ADD COLUMN land varchar;
 ALTER TABLE pois RENAME land TO country;
 ALTER TABLE pois DROP COLUMN country;
-ALTER TABLE pois ADD CONSTRAINT pk_gid PRIMARY KEY (gid); 
 ```
 
 Delete your table
@@ -204,7 +205,7 @@ DROP TABLE pois;
 * manipulate your data - create data, delete data, change data
 
 ```sql
-INSERT INTO pois (name, year, info, geom) VALUES 
+INSERT INTO pois (name, year, info) VALUES 
 (
 'Kölner Dom',
 1248,
@@ -213,13 +214,16 @@ INSERT INTO pois (name, year, info, geom) VALUES
 ```
 
 ```sql
-DELETE FROM pois WHERE name = 'Kölner Dom';
-DELETE FROM pois; -- deletes all data
-DELETE FROM pois WHERE gid = 1111;
+UPDATE pois SET name = 'Cologne Cathedral' WHERE name = 'Kölner Dom';
 ```
 
 ```sql
-UPDATE pois SET name = 'Cologne Cathedral' WHERE name = 'Kölner Dom';
+--deletes feature with name "Cologne Cathedral"
+DELETE FROM pois WHERE name = 'Cologne Cathedral'; 
+-- deletes all data from table pois
+DELETE FROM pois; 
+--deletes feature with gid = "1111"
+DELETE FROM pois WHERE gid = 1111; 
 ```
 
 ### Excercise 2: Create your own database with PostGIS extension 
@@ -239,7 +243,7 @@ Notice: Use lower case and no spaces as name for your database, tables columns! 
 CREATE DATABASE foss4g;
 ```
 
-Move to database *__foss4g_**
+Move to database *__foss4g_** (update object browser, select foss4g database and open new query editor)
 
 ```sql
 CREATE EXTENSION postgis;
@@ -248,7 +252,7 @@ CREATE EXTENSION postgis;
 
 ### Excercise 3: Use the utility program createdb to create a database via command line 
 
-* check the PostGIS Quickstart and see how the dabase demo was created 
+* check the PostGIS Quickstart and see how the database demo was created 
 * https://live.osgeo.org/en/quickstart/postgis_quickstart.html
 * PostgreSQL provides utility programs like **_createdb_** and **_dropdb_** to communicate with the database
 
@@ -305,17 +309,16 @@ INSERT INTO cities(
 ### Excercise 5: QGIS: Load data from **_natural_earth2_** and from your new database
 
 1. Open QGIS. Choose :menuselection:`Geospatial --> Desktop QGIS --> QGIS Desktop` .
-1. Load countries from the database natural_earth2
+1. Load countries (table `ne_10m_admin_1_states_provinces_shp`) from the database natural_earth2
 1. Create a new PostGIS connection to your new database foss4g
 1. Load your new table cities
 1. Add a new point to your cities table and mark the place where you come from (approximately)
 
 ![](img/qgis_cities.png)
 
-
 ## QGIS import data to PostgreSQL via QGIS DB Manager
 
-You can use the QGIS DB Manager to import/export data to/from your database. You find the QGIS DB Manager in the menu at Database -> DB Manager. You already need a connection to the PostgreSQL database that you would like to use.
+You can use the QGIS DB Manager to import/export data to/from your database. You find the QGIS DB Manager in the menu at Database -> DB Manager. You need a connection to the PostgreSQL database that you would like to use.
 
 Best way is to add the data you would like to import to a QGIS project. You can filter the data if you only want to import a subset of your data. 
 
@@ -331,11 +334,12 @@ To import data you have to follow the steps:
 
 ![](img/qgis_db_manager_import.png)
 
+
 ### Excercise 6: Load data from natural_earth2 shapes to your database
 
 * Import ne_10m_admin_0_countries.shp to table ne_10m_admin_0_countries.shp
 * /home/user/data/natural_earth2/ne_10m_admin_1_states_provinces_shp.shp to table ne_10m_admin_1_states_provinces_shp
-* Also import provinces and only import the provinces from Romania to **_table provinces_romania_** (use Filter admin='Romania')
+* Also import provinces and only import the provinces from Romania to **_table provinces_romania_** (use Filter "admin" = 'Romania')
 * Import all ne_10m_populated_places to table **_ne_10m_populated_places_**
 * Have a look to your metadata view **_geometry_columns_**
  
@@ -370,6 +374,7 @@ Update cities set geom = ST_GeomFromText('POINT(6.958307 50.941357)',4326) where
 ```sql
 Update ne_10m_admin_0_countries set geom = ST_GeomFromText('MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))',4326) where name = 'Germany';
 ```
+![](img/qgis_ST_GeomFromText)
 
 ## Spatial Relationships and Measurements
 
@@ -379,7 +384,7 @@ Update ne_10m_admin_0_countries set geom = ST_GeomFromText('MULTIPOLYGON(((0 0,4
 ### Excercise 7: Calculate the area for each country
 
 * http://postgis.net/docs/ST_Area.html
-* Note that the area is calculated using the srid of the geometry. Use the calculation on the spheroid to get the r result in meters.
+* Note that the area is calculated using the srid of the geometry. Use the calculation on the spheroid to get the result in meters.
 
 Calculate area without using the spheroid (units of the projection will be used)
 ```sql
@@ -540,11 +545,13 @@ SELECT 1 as gid,
 CREATE VIEW qry_romania_union AS
 SELECT 1 as gid, 
   admin, 
-  ST_UNION(geom)::geometry(multipolygon,4326) as geom
+  ST_UNION(geom::geometry(multipolygon,4326)) as geom
   FROM public.ne_10m_admin_1_states_provinces_shp 
   WHERE admin='Romania'
   GROUP BY admin ;
 ```
+
+![](img/qgis_qry_romania_union.png)
 
 ### ST_Subdivide
 
@@ -565,6 +572,8 @@ CREATE TABLE provinces_subdivided AS
 ALTER TABLE provinces_subdivided ADD COLUMN gid serial PRIMARY KEY;
 ```
 
+![](img/qgis_qry_provinces_subdivided.png)
+
 * with definition of max_vertices (default is 256, not < 8)
 
 ```sql
@@ -578,6 +587,8 @@ CREATE TABLE provinces_subdivided AS
 
 ALTER TABLE provinces_subdivided ADD COLUMN gid serial PRIMARY KEY;
 ```
+
+![](img/qgis_qry_provinces_subdivided_max_vertices.png)
 
 
 ```sql
@@ -616,6 +627,8 @@ SELECT name, getCountrynameSubdivided(geom)
  FROM public.ne_10m_populated_places 
  WHERE adm0name = 'Romania';
 ```
+![](img/getCountrynameSubdivided.png)
+
 
 ```sql
 ALTER TABLE ne_10m_populated_places ADD COLUMN countryname varchar;
@@ -671,6 +684,12 @@ GRANT workshop_writer TO wilma;
 GRANT SELECT ON ne_10m_admin_1_states_provinces_shp TO workshop_reader;
 -- change to user robert
 Select * from ne_10m_admin_1_states_provinces_shp;
+
+-- this command will return an error. Role robert isn't allowed to modify data.
+SELECT * from ne_10m_admin_1_states_provinces_shp;
+UPDATE ne_10m_admin_1_states_provinces_shp SET name = 'TEST' WHERE name = 'Bucharest';
+
+--ERROR:  permission denied for relation ne_10m_admin_1_states_provinces_shp
 
 GRANT ALL ON cities to workshop_writer;
 GRANT USAGE ON SEQUENCE cities_gid_seq TO workshop_writer;
