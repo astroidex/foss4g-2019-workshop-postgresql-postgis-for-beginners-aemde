@@ -449,6 +449,7 @@ SELECT g.name, you.name, ST_Distance(g.geom, you.geom,true)
     g.name = 'Dar es Salaam' 
     AND you.name='Cologne';
 ```
+![](img/st_distance.png)
 
 ## Spatial Index and functional Index
 
