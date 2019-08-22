@@ -22,7 +22,7 @@
 
 ## Lars Lingner
 
-* with friendly support of GIS Consultant Lars Lingner Mappwebbing Germany
+* with friendly support of GIS Consultant Lars Lingner mapwebbing Germany
 * lars@lingner.eu
 * [![@mapwebbing on twitter](img/twitter.png)](https://twitter.com/mapwebbing) [@mapwebbing](https://twitter.com/mapwebbing)
 
@@ -374,7 +374,7 @@ Update cities set geom = ST_GeomFromText('POINT(6.958307 50.941357)',4326) where
 ```sql
 Update ne_10m_admin_0_countries set geom = ST_GeomFromText('MULTIPOLYGON(((0 0,4 0,4 4,0 4,0 0),(1 1,2 1,2 2,1 2,1 1)), ((-1 -1,-1 -2,-2 -2,-2 -1,-1 -1)))',4326) where name = 'Germany';
 ```
-![](img/qgis_ST_GeomFromText)
+![](img/qgis_ST_GeomFromText.png)
 
 ## Spatial Relationships and Measurements
 
