@@ -264,6 +264,9 @@ createdb --help
 
 psql -U user demo
 CREATE EXTENSION postgis;
+\q
+
+dropdb -U user demo
 ```
 
 ### Excercise 4: Create your own table cities
