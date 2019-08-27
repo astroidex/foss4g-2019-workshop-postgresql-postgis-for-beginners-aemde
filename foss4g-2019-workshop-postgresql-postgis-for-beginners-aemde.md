@@ -451,6 +451,8 @@ SELECT g.name, you.name, ST_Distance(g.geom, you.geom,true)
 ```
 ![](img/st_distance.png)
 
+![](img/qgis_great_circle.png)
+
 ## Spatial Index and functional Index
 
 * Your geometry column should have an index - can make your spatial queries faster
