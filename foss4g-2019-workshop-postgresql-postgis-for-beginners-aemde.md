@@ -451,7 +451,7 @@ SELECT g.name, you.name, ST_Distance(g.geom, you.geom,true)
   FROM cities g, 
   cities you 
   WHERE 
-    g.name = 'Dar es Salaam' 
+    g.name = 'Bucharest' 
     AND you.name='Cologne';
 ```
 ![](img/st_distance.png)
